@@ -1,0 +1,34 @@
+<h1><%= Book.model_name.human %>管理</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th><%= t Book.human_attribute_name(:publisher) %></th>
+      <th><%= t Book.human_attribute_name(:title) %></th>
+      <th><%= t Book.human_attribute_name(:number) %></th>
+      <th><%= t Book.human_attribute_name(:release) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <#% @books.each do |work| %>
+      <tr>
+        <td><#%= book.id %></td>
+
+        <td><#%= book.publisher %></td>
+
+        <td><#%= book.title.truncate(20) %></td>
+
+        <td><#%= book.number %></td>
+
+        <td><#%= book.release %></td>
+
+        <td>
+          <#%= link_to '表示', book, class: "btn btn-secondary" %>
+        </td>
+      </tr>
+    <#% end %>
+  </tbody>
+</table>

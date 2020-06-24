@@ -1,0 +1,22 @@
+ja:
+  activerecord:
+    models:
+      book: 書籍  #g
+
+    attributes:
+      work:
+        detail: 詳細  #g
+        title: タイトル
+        number: 巻数
+        author: 著者
+        illustrator: イラスト
+        subtitle: サブタイトル
+        detail: 詳細
+        isbn: ISBN
+        format: 判型
+        page: ページ数
+        release: 発売日
+        price: 定価
+        publisher: 出版社
+        created_at: 作成日
+        updated_at: 更新日

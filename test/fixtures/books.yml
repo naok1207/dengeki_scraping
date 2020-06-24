@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  number: 1
+  author: MyString
+  illustrator: MyString
+  subtitle: MyString
+  detail: MyText
+  isbn: 1
+  format: MyString
+  page: 1
+  release: 2020-06-24 19:54:45
+  price: 1
+  publisher: MyString
+  url: MyString
+  image: MyString
+
+two:
+  title: MyString
+  number: 1
+  author: MyString
+  illustrator: MyString
+  subtitle: MyString
+  detail: MyText
+  isbn: 1
+  format: MyString
+  page: 1
+  release: 2020-06-24 19:54:45
+  price: 1
+  publisher: MyString
+  url: MyString
+  image: MyString
