@@ -5,7 +5,7 @@
     イラスト : illustrator : string
     サブタイトル : subtitle : string
     詳細 : detail : text
-    ISBN : isbn : integer
+    ISBN : isbn : bigint
     判型 : format : integer
     ページ数 : page : integer
     発売日 : release : datetime
@@ -16,4 +16,4 @@
     シリーズ : series : string
 
 コマンド
-    $rails g model book title:string number:integer author:string illustrator:string subtitle:string detail:text isbn:integer format:string page:integer release:datetime price:integer publisher:string url:string image:string series:string
+    $rails g model book title:string number:integer author:string illustrator:string subtitle:string detail:text isbn:bigint format:string page:integer release:datetime price:integer publisher:string url:string image:string series:string

@@ -11,7 +11,7 @@ module ScrapingBook
         Nokogiri::HTML.parse(file, nil, "utf-8")
     end
 
-    def self.fetch_work(url, doc)
+    def self.fetch_book(url, doc)
         return {
             title: title(doc),
             number: number(doc),
@@ -19,14 +19,15 @@ module ScrapingBook
             illustrator: illusrator(doc),
             subtitle: subtitle(doc),
             detail: detail(doc),
-            isbs: isbs(doc),
+            isbn: isbn(doc),
             format: format(doc),
             page: page(doc),
-            release: datetime(doc),
+            release: release(doc),
             price: price(doc),
             publisher: '電撃文庫',
             url: url,
-            image: image(doc)
+            image: image(doc),
+            series: series(doc)
         }
     end
 
@@ -35,8 +36,7 @@ module ScrapingBook
     end
 
     def self.number(doc)
-        title = title(doc)
-        return title =~ /\A[0-9]+\z/ ? title : nil
+        title(doc).delete("^0-9").to_i
     end
 
     def self.author(doc)
@@ -56,30 +56,32 @@ module ScrapingBook
     end
 
     def self.isbn(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/table/tbody/tr[1]/td').text.strip.to_i
+        doc.at('//div[contains(@class, "media-body p-books-media02__contents")]//tr[1]/td').text.delete("^0-9").to_i
     end
 
     def self.format(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/table/tbody/tr[2]/td').text.strip
+        doc.at('//div[contains(@class, "media-body p-books-media02__contents")]//tr[2]/td').text.strip
     end
 
     def self.page(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/table/tbody/tr[3]/td').text.strip.to_i
+        doc.at('//div[contains(@class, "media-body p-books-media02__contents")]//tr[3]/td').text.delete("^0-9").to_i
     end
 
     def self.release(doc)
-        date_str = doc.at('//section[contains(@class, "toplevel_information")]//table/tbody/tr[4]/td').text
+        date_str = doc.at('//div[contains(@class, "media-body p-books-media02__contents")]//tr[4]/td').text.strip
         date_str = "2000年1月1日" unless date_str.match(/\A\d{4}年\d{1,2}月\d{1,2}日\z/) 
         Date.strptime(date_str, "%Y年%m月%d日")
     end
 
     def self.price(doc)
-        price_text = doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/table/tbody/tr[5]/td').text.strip
-        price =  price_text =~ /\A[0-9]+\z/ ? price_text : nil
-        return price.to_i
+        doc.at('//div[contains(@class, "media-body p-books-media02__contents")]//tr[5]/td').text.delete("^0-9").to_i
     end
 
     def self.image(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[1]/img/src').text.strip
+        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[1]/img')[:src]
+    end
+
+    def self.series(doc)
+        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/div[1]/div/p/a').text.strip
     end
 end

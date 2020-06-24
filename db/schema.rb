@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_105445) do
+ActiveRecord::Schema.define(version: 2020_06_24_175959) do
 
   create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_105445) do
     t.string "illustrator"
     t.string "subtitle"
     t.text "detail"
-    t.integer "isbn"
+    t.bigint "isbn"
     t.string "format"
     t.integer "page"
     t.datetime "release"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_105445) do
     t.string "publisher"
     t.string "url"
     t.string "image"
+    t.string "series"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
