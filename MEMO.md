@@ -13,6 +13,7 @@
     出版社 : publisher : string
     url : url : string
     画像 : image : string
+    シリーズ : series : string
 
 コマンド
-    $rails g model book title:string number:integer author:string illustrator:string subtitle:string detail:text isbn:integer format:string page:integer release:datetime price:integer publisher:string url:string image:string
+    $rails g model book title:string number:integer author:string illustrator:string subtitle:string detail:text isbn:integer format:string page:integer release:datetime price:integer publisher:string url:string image:string series:string
