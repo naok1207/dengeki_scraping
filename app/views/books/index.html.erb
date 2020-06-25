@@ -1,6 +1,8 @@
+<div class="container">
+
 <h1><%= Book.model_name.human %>管理</h1>
 
-<table class="table">
+<table class="book-index__table">
   <thead>
     <tr>
       <th>ID</th>
@@ -23,7 +25,7 @@
 
         <td><%= book.number %></td>
 
-        <td><%= book.release %></td>
+        <td><%= book.release.strftime("%Y年%m月%d日") %></td>
 
         <td>
           <%= link_to '表示', book, class: "btn btn-secondary" %>
@@ -32,3 +34,5 @@
     <% end %>
   </tbody>
 </table>
+
+</div>

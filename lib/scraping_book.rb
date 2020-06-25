@@ -32,27 +32,33 @@ module ScrapingBook
     end
 
     def self.title(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/div[1]/div/h1').text.strip
+        doc.at('//h1[contains(@class, "p-books-media__title")]').text.strip
     end
 
     def self.number(doc)
-        title(doc).delete("^0-9").to_i
+        number = title(doc).delete("^０-９0-9")
+        number = number.tr("０-９", "0-9")
+        number.to_i
     end
 
     def self.author(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/div[1]/div/ul/li[1]/a').text.strip
+        author = doc.at('//ul[contains(@class, "p-books-media__authors")]/li[1]/a')
+        author ? author.text.strip : nil
     end
 
     def self.illusrator(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/div[1]/div/ul/li[2]/a').text.strip
+        illustrator = doc.at('//ul[contains(@class, "p-books-media__authors")]/li[2]/a')
+        illustrator ? illustrator.text.strip : nil
     end
 
     def self.subtitle(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/p').text.strip
+        subtitle = doc.at('//p[contains(@class, "p-books-media__lead")]')
+        subtitle ? subtitle.text.strip : nil
     end
 
     def self.detail(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/div[2]/p[3]').text.strip
+        detail = doc.at('//p[contains(@class, "p-books-media02__detail")]')
+        detail ? detail.text.strip : nil
     end
 
     def self.isbn(doc)
@@ -68,20 +74,20 @@ module ScrapingBook
     end
 
     def self.release(doc)
-        date_str = doc.at('//div[contains(@class, "media-body p-books-media02__contents")]//tr[4]/td').text.strip
-        date_str = "2000年1月1日" unless date_str.match(/\A\d{4}年\d{1,2}月\d{1,2}日\z/) 
+        date_str = doc.at('//div[contains(@class, "p-books-media02__contents")]//tr[4]/td').text
         Date.strptime(date_str, "%Y年%m月%d日")
     end
 
     def self.price(doc)
-        doc.at('//div[contains(@class, "media-body p-books-media02__contents")]//tr[5]/td').text.delete("^0-9").to_i
+        doc.at('//div[contains(@class, "p-books-media02__contents")]//tr[5]/td').text.delete("^0-9").to_i
     end
 
     def self.image(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[1]/img')[:src]
+        doc.at('//img[contains(@class, "p-books-media02__img")]')[:src]
     end
 
     def self.series(doc)
-        doc.at('/html/body/div/main/div/div/div/div[1]/div[1]/div/div[1]/div[1]/div[2]/div[1]/div/p/a').text.strip
+        title = doc.at('//a[contains(@class, "p-books-media__series-name")]')
+        title ? title.text.strip : nil
     end
 end

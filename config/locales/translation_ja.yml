@@ -4,7 +4,7 @@ ja:
       book: 書籍  #g
 
     attributes:
-      work:
+      book:
         detail: 詳細  #g
         title: タイトル
         number: 巻数

@@ -8,16 +8,16 @@
     </div>
 
     <div class="book-content">
-        <%= Book.human_attribute_name(:title) + '  ' + @book.title %><br />
+        <%= Book.human_attribute_name(:series) + '  ' + @book.series %><br />
 
-        <%= Book.human_attribute_name(:number) + '  ' + @book.number.to_s %><br />
+        <%= Book.human_attribute_name(:title) + '  ' + @book.title %><br />
 
         <%= Book.human_attribute_name(:author) + '  ' + @book.author + '    ' + 
                 Book.human_attribute_name(:illustrator) + '  ' + @book.illustrator %><br />
 
         <%= @book.subtitle %><br />
 
-        <%=  @book.detail %><br />
+        <%= sanitize(simple_format(@book.detail.gsub(/\r\n|\r|\n/, "<br>")), tags: %w(br)) %><bt />
 
         <%= Book.human_attribute_name(:isbn) + '  ' + @book.isbn.to_s %><br />
 
@@ -25,7 +25,7 @@
 
         <%= Book.human_attribute_name(:page) + '  ' + @book.page.to_s %><br />
 
-        <%= Book.human_attribute_name(:release) + '  ' + @book.release.to_s %><br />
+        <%= Book.human_attribute_name(:release) + '  ' + @book.release.strftime("%Y年%m月%d日") %><br />
 
         <%= Book.human_attribute_name(:price) + '  ' + @book.price.to_s %><br />
 
