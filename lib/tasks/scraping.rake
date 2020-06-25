@@ -5,20 +5,29 @@ namespace :scraping do
   task fetch_dengeki: :environment do
     p "スクレイピングを開始しました。"
     ScrapingBook.sample_function
-    books_url = "https://dengekibunko.jp/product/newrelease-bunko.html"
-    books_doc = ScrapingBook.get_book_doc(books_url)
-    paths = books_doc.search('//h2[contains(@class, "p-books-media__title")]/a').map {|a| a[:href] }
-    puts paths
-    paths.each do |path|
-      url = path
-      doc = ScrapingBook.get_book_doc(url)
-      book_hash = ScrapingBook.fetch_book(url, doc)
-      if book = Book.find_by(url: url)
-        book.update(book_hash)
-      elsif
-        Book.create!(book_hash)
+    default_url = "https://dengekibunko.jp/product"
+    
+    2.times do |i|
+      if i == 1
+        books_url = default_url
+      else
+        books_url = "#{default_url}/page/#{i}"
       end
-      p book_hash[:title]
+      books_doc = ScrapingBook.get_book_doc(books_url)
+      paths = books_doc.search('//h2[contains(@class, "p-books-media__title")]/a').map {|a| a[:href] }
+      puts paths
+      paths.each do |path|
+        sleep(1)
+        url = path
+        doc = ScrapingBook.get_book_doc(url)
+        book_hash = ScrapingBook.fetch_book(url, doc)
+        if book = Book.find_by(url: url)
+          book.update(book_hash)
+        elsif
+          Book.create!(book_hash)
+        end
+        p book_hash[:title]
+      end
     end
   end
 
