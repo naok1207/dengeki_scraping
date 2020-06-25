@@ -1,0 +1,47 @@
+<div class="container">
+
+<h1><%= Book.model_name.human %>検索</h1>
+
+<%= form_tag(search_path,:method => 'get') do %>
+    <%= text_field_tag :search %>
+    <%= submit_tag 'Search', :name => nil %>
+  <% end %>
+
+<div class="book-search__wrap">
+    <table class="book-index__table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th><%= t Book.human_attribute_name(:publisher) %></th>
+        <th><%= t Book.human_attribute_name(:title) %></th>
+        <th><%= t Book.human_attribute_name(:number) %></th>
+        <th><%= t Book.human_attribute_name(:release) %></th>
+        <th></th>
+    </tr>
+    </thead>
+
+
+    <tbody id="search">
+        <% @books.each do |book| %>
+            <tr>
+            <td><%= book.id %></td>
+
+            <td><%= book.publisher %></td>
+
+            <td><%= book.title.truncate(20) %></td>
+
+            <td><%= book.number %></td>
+
+            <td><%= book.release.strftime("%Y年%m月%d日") %></td>
+
+            <td>
+                <%= link_to '表示', book, class: "btn btn-secondary" %>
+            </td>
+            </tr>
+        <% end %>
+    </tbody>
+
+    </table>
+</div>
+
+</div>

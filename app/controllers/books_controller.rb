@@ -11,4 +11,11 @@ class BooksController < ApplicationController
         @book = Book.find(params[:id])
     end
 
+    def search
+        if params[:search].present?
+            @books = Book.search(params[:search])
+        else
+            @books = Book.none
+        end
+    end
 end
