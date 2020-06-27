@@ -15,7 +15,7 @@ class CreateBooks < ActiveRecord::Migration[6.0]
       t.string :publisher
       t.string :url
       t.string :image
-      t.string :series
+      t.references :series, foreign_key: true
 
       t.timestamps
     end

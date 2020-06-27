@@ -7,7 +7,7 @@ namespace :scraping do
     ScrapingBook.sample_function
     default_url = "https://dengekibunko.jp/product"
     
-    2.times do |i|
+    178.times do |i|
       if i == 1
         books_url = default_url
       else
@@ -15,7 +15,7 @@ namespace :scraping do
       end
       books_doc = ScrapingBook.get_book_doc(books_url)
       paths = books_doc.search('//h2[contains(@class, "p-books-media__title")]/a').map {|a| a[:href] }
-      puts paths
+      # puts paths
       paths.each do |path|
         sleep(1)
         url = path

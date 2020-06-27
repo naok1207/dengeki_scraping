@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_175959) do
+ActiveRecord::Schema.define(version: 2020_06_26_040551) do
+
+  create_table "book_series_relations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "series_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_book_series_relations_on_book_id"
+    t.index ["series_id"], name: "index_book_series_relations_on_series_id"
+  end
 
   create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -27,9 +36,19 @@ ActiveRecord::Schema.define(version: 2020_06_24_175959) do
     t.string "publisher"
     t.string "url"
     t.string "image"
-    t.string "series"
+    t.bigint "series_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["series_id"], name: "index_books_on_series_id"
+  end
+
+  create_table "series", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "book_series_relations", "books"
+  add_foreign_key "book_series_relations", "series"
+  add_foreign_key "books", "series"
 end

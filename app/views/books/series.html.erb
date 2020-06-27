@@ -1,0 +1,18 @@
+<div class="container">
+
+<h1><%= Book.model_name.human %>情報</h1>
+
+<h2><%= t Book.human_attribute_name(:series) %> <%= @series.title %></h2>
+
+<div class="book-series__wrap">
+    <div class="book-series__books">
+        <% @books.each do |book| %>
+            <div class="book-series__book">
+                <%= link_to book do %>
+                    <img src="<%= book.image %>" class="book__image">
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+</div>
+</div>

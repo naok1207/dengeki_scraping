@@ -8,7 +8,9 @@
     </div>
 
     <div class="book-content">
-        <%= Book.human_attribute_name(:series) + '  ' + @book.series %><br />
+        <% if @book.series.present? %>
+            <%= link_to Book.human_attribute_name(:series) + '  ' + @book.series.title, @book.series %><br />
+        <% end %>
 
         <%= Book.human_attribute_name(:title) + '  ' + @book.title %><br />
 

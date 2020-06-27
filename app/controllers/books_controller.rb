@@ -18,4 +18,9 @@ class BooksController < ApplicationController
             @books = Book.none
         end
     end
+
+    def series
+        @series = Series.find(params[:id])
+        @books = Book.all.where(series: @series.id).order(release: :asc)
+    end
 end

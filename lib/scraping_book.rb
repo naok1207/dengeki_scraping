@@ -27,7 +27,7 @@ module ScrapingBook
             publisher: '電撃文庫',
             url: url,
             image: image(doc),
-            series: series(doc)
+            series_id: series(doc)
         }
     end
 
@@ -74,8 +74,9 @@ module ScrapingBook
     end
 
     def self.release(doc)
-        date_str = doc.at('//div[contains(@class, "p-books-media02__contents")]//tr[4]/td').text
-        Date.strptime(date_str, "%Y年%m月%d日")
+        date_str = doc.at('//div[contains(@class, "p-books-media02__contents")]//tr[4]/td')
+        date_str = "2000年1月1日" if date_str
+        Date.strptime(date_str.text, "%Y年%m月%d日")
     end
 
     def self.price(doc)
@@ -88,6 +89,16 @@ module ScrapingBook
 
     def self.series(doc)
         title = doc.at('//a[contains(@class, "p-books-media__series-name")]')
-        title ? title.text.strip : nil
+        if title.present?
+            title = title.text.strip
+        else
+            return ''
+        end
+        if Series.find_by(title: title)
+            series = Series.find_by(title: title)
+        else
+            series = Series.create!(title: title)
+        end
+        return series.id
     end
 end
